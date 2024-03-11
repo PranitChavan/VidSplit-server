@@ -1,19 +1,17 @@
-import express, { Express } from 'express';
-import dotenv from 'dotenv';
-import cors from 'cors';
-import videoRouter from './routes/video';
+import cluster from 'cluster';
+import os from 'os';
+import { init } from './init';
 
-dotenv.config();
-const app: Express = express();
+if (cluster.isPrimary) {
+  for (let i = 0; i < os.cpus().length; i++) {
+    cluster.fork();
+  }
 
-app.use(
-  cors({
-    origin: 'http://localhost:5173',
-  })
-);
-
-app.use('/api/video', videoRouter);
-
-app.listen(process.env.PORT);
-
-export default app;
+  cluster.on('exit', (worker, code) => {
+    if (code !== 0 && !worker.exitedAfterDisconnect) {
+      cluster.fork();
+    }
+  });
+} else {
+  init();
+}
