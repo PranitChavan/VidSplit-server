@@ -1,4 +1,4 @@
-import express, { Express } from 'express';
+import express, { Express, Response } from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
 import videoRouter from './routes/video';
@@ -12,6 +12,10 @@ export function init() {
       origin: 'http://localhost:5173',
     })
   );
+
+  app.get('/', (_, res: Response) => {
+    res.status(200).json({ message: 'Hello, World!' });
+  });
 
   app.use('/api/video', videoRouter);
 
