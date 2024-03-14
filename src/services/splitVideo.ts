@@ -2,8 +2,11 @@ import path from 'path';
 import fs from 'fs';
 import { ISplitReqBody } from '../models/types';
 import ffmpeg from 'fluent-ffmpeg';
-const ffmpegPath = require('@ffmpeg-installer/ffmpeg').path;
-ffmpeg.setFfmpegPath(ffmpegPath);
+import ffmpegPath from '@ffmpeg-installer/ffmpeg';
+ffmpeg.setFfmpegPath(ffmpegPath.path);
+
+console.log(ffmpegPath.path, 'PATH');
+console.log(ffmpegPath.version, 'VERSION');
 
 const rootOutputDir = path.join(process.cwd(), 'outputs'); // root outputs folder path
 
