@@ -18,7 +18,9 @@ function init() {
         res.status(200).json({ message: 'Hello, World!' });
     });
     app.use('/api/video', video_1.default);
-    app.listen(process.env.PORT);
+    app.listen(process.env.PORT, () => {
+        console.log(`Server running on port ${process.env.PORT}`);
+    });
 }
 exports.init = init;
 //# sourceMappingURL=init.js.map
