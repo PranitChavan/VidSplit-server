@@ -6,9 +6,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const path_1 = __importDefault(require("path"));
 const fs_1 = __importDefault(require("fs"));
 const fluent_ffmpeg_1 = __importDefault(require("fluent-ffmpeg"));
-const ffmpeg_static_1 = __importDefault(require("ffmpeg-static"));
-fluent_ffmpeg_1.default.setFfmpegPath(ffmpeg_static_1.default);
-console.log();
+const ffmpegPath = require('@ffmpeg-installer/ffmpeg').path;
+fluent_ffmpeg_1.default.setFfmpegPath(ffmpegPath);
 const rootOutputDir = path_1.default.join(process.cwd(), 'outputs'); // root outputs folder path
 async function splitVideo(videoParams) {
     const { videoUrl, chunkDuration, sessionId } = videoParams;
