@@ -1,12 +1,7 @@
 import path from 'path';
 import fs from 'fs';
 import { ISplitReqBody } from '../models/types';
-import ffmpeg from 'fluent-ffmpeg';
-import ffmpegPath from '@ffmpeg-installer/ffmpeg';
-ffmpeg.setFfmpegPath(ffmpegPath.path);
-
-console.log(ffmpegPath.path, 'PATH');
-console.log(ffmpegPath.version, 'VERSION');
+import FFmpeg from 'fluent-ffmpeg';
 
 const rootOutputDir = path.join(process.cwd(), 'outputs'); // root outputs folder path
 
@@ -18,7 +13,7 @@ export default async function splitVideo(videoParams: ISplitReqBody): Promise<st
     fs.mkdirSync(path.join(outputDir), { recursive: true }); // create folder in outputs folder, name will be the current sessionId
     const outputPath = path.join(outputDir, 'output-%d.mp4'); // Files in the sessionId folder
 
-    ffmpeg(videoUrl)
+    FFmpeg(videoUrl)
       .videoCodec('libx264')
       .audioCodec('aac')
       .outputOptions(['-map 0', '-f segment', `-segment_time ${chunkDuration}`, '-g 30', '-reset_timestamps 1'])
