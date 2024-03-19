@@ -14,7 +14,7 @@ export function init() {
   );
 
   app.get('/', (_, res: Response) => {
-    res.status(200).json({ message: 'Hello, World!' });
+    res.status(200).json({ message: 'Hello, World! Working fine!' });
   });
 
   app.use('/api/video', videoRouter);
