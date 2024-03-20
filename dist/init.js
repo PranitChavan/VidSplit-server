@@ -14,8 +14,13 @@ function init() {
     app.use((0, cors_1.default)({
         origin: 'http://localhost:5173',
     }));
-    app.get('/', (_, res) => {
-        res.status(200).json({ message: 'Hello, World!' });
+    app.get('/', (req, res) => {
+        console.log('get reqq');
+        res.status(200).json({ message: 'Hello, World! Working fine!' });
+    });
+    app.post('/split', (req, res) => {
+        console.log('post req');
+        res.send({ message: 'done' });
     });
     app.use('/api/video', video_1.default);
     app.listen(process.env.PORT, () => {

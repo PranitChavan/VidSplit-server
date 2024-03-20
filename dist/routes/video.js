@@ -8,7 +8,7 @@ const video_1 = require("../middlewares/video");
 const error_handler_1 = require("../middlewares/error-handler");
 const videoRouter = express_1.default.Router();
 videoRouter.use(express_1.default.json());
-videoRouter.post('/split', video_1.splitVideoMiddleWare, (req, res) => {
+videoRouter.post('/split', video_1.splitVideoMiddleWare, (_req, res) => {
     res.send({ message: 'done' });
 });
 videoRouter.use(error_handler_1.errorHandler);
