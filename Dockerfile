@@ -5,10 +5,12 @@ RUN apt-get update && \
 
 WORKDIR /vid-splitter/server/
 
-COPY package.json /vid-splitter/server/
+COPY package*.json .
 RUN npm install
 
 COPY . .
 RUN npx tsc
+
+EXPOSE 6969
 
 ENTRYPOINT [ "node" , "dist/app.js"]

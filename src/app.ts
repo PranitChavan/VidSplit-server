@@ -1,19 +1,30 @@
-import cluster from 'cluster';
-import os from 'os';
-import { init } from './init';
+import express, { Express, Response } from 'express';
+import dotenv from 'dotenv';
+import cors from 'cors';
+import { splitVideoMiddleWare } from './middlewares/video';
+import { errorHandler } from './middlewares/error-handler';
 
-init();
+dotenv.config();
+const app: Express = express();
 
-// if (cluster.isPrimary) {
-//   for (let i = 0; i < os.cpus().length; i++) {
-//     cluster.fork();
-//   }
+app.use(
+  cors({
+    origin: 'http://localhost:5173',
+  })
+);
 
-//   cluster.on('exit', (worker, code) => {
-//     if (code !== 0 && !worker.exitedAfterDisconnect) {
-//       cluster.fork();
-//     }
-//   });
-// } else {
-//   init();
-// }
+app.use(express.json());
+
+app.get('/health', (_req, res: Response) => {
+  res.status(200).json({ message: 'Hello, World! Working fine!' });
+});
+
+app.post('/api/video/split', splitVideoMiddleWare, (_req, res: Response) => {
+  res.send({ message: 'done' });
+});
+
+app.use(errorHandler);
+
+app.listen(process.env.PORT, () => {
+  console.log(`Server running on port ${process.env.PORT}`);
+});
