@@ -1,18 +1,33 @@
-FROM node:18
+FROM node:18 as development
+
+WORKDIR /vid-splitter/server/
 
 RUN apt-get update && \
     apt-get install -y ffmpeg
 
-WORKDIR /vid-splitter/server/
+COPY package*.json .
+
+RUN npm install
+
+COPY . .
+
+RUN npm run build
+
+
+
+FROM node:18 as production
 
 ENV NODE_ENV=production
 
+WORKDIR /vid-splitter/server/
+
+RUN apt-get update && \
+    apt-get install -y ffmpeg
+
 COPY package*.json .
-RUN npm install --production
 
-COPY . .
-RUN npx tsc
+RUN npm ci --only=production
 
-EXPOSE 6969
+COPY --from=development /vid-splitter/server/dist ./dist
 
-ENTRYPOINT [ "node" , "dist/app.js"]
+CMD ["node", "dist/app.js"]

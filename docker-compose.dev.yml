@@ -1,0 +1,13 @@
+version: '1.0.0'
+
+services:
+  video-api-dev:
+    build:
+      context: .
+      target: development
+    volumes:
+      - ./:/vid-splitter/server/
+      - /vid-splitter/server/node_modules
+    ports:
+      - 6969:6969
+    command: npm run dev

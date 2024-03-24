@@ -1,0 +1,9 @@
+version: '1.0.0'
+
+services:
+  video-api:
+    build: .
+    ports:
+      - 6969:6969
+    env_file:
+      - .env
