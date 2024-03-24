@@ -5,8 +5,10 @@ RUN apt-get update && \
 
 WORKDIR /vid-splitter/server/
 
+ENV NODE_ENV=production
+
 COPY package*.json .
-RUN npm install
+RUN npm install --production
 
 COPY . .
 RUN npx tsc
