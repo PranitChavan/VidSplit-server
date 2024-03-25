@@ -5,7 +5,8 @@ WORKDIR /vid-splitter/server/
 RUN apt-get update && \
     apt-get install -y ffmpeg
 
-COPY package*.json .
+COPY package.json .
+COPY package-lock.json .
 
 RUN npm install
 
@@ -24,7 +25,8 @@ WORKDIR /vid-splitter/server/
 RUN apt-get update && \
     apt-get install -y ffmpeg
 
-COPY package*.json .
+COPY package.json .
+COPY package-lock.json .
 
 RUN npm ci --only=production
 
