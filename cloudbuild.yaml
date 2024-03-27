@@ -3,3 +3,5 @@ steps:
     args: ['build', '-t', 'gcr.io/vid-splitter/github.com/pranitchavan/vidsplit-server:$SHORT_SHA', '.']
   - name: 'gcr.io/cloud-builders/docker'
     args: ['push', 'gcr.io/vid-splitter/github.com/pranitchavan/vidsplit-server:$SHORT_SHA']
+  - name: 'gcr.io/cloud-builders/gcloud'
+    args: ['beta', 'run', 'deploy', 'vid-splitter', '--region=asia-south1', '--platform=managed', '--image=gcr.io/vid-splitter/github.com/pranitchavan/vidsplit-server:$SHORT_SHA']
