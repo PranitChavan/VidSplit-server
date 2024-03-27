@@ -1,0 +1,5 @@
+steps:
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-t', 'gcr.io/vid-splitter/github.com/pranitchavan/vidsplit-server:$SHORT_SHA', '.']
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'gcr.io/vid-splitter/github.com/pranitchavan/vidsplit-server:$SHORT_SHA']
