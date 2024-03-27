@@ -19,7 +19,7 @@ app.use(express.json());
 
 app.get('/health', (_req, res: Response) => {
   logger.info('Health check', { Information: 'Performing health check.', Timestamp: formatDate(new Date()) });
-  res.status(200).json({ message: 'Working fine!' });
+  res.status(200).json({ message: 'Working fine!!!!!!!!!!!!!!!!!!!!!!!!!!!!!' });
 });
 
 app.post('/api/video/split', splitVideoMiddleWare, (req, res: Response) => {
