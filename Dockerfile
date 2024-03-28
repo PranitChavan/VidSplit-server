@@ -23,6 +23,12 @@ WORKDIR /vid-splitter/server/
 COPY package.json .
 COPY package-lock.json .
 
+# Combine installation of ffmpeg into a single RUN command
+RUN apt-get update && \
+    apt-get install -y ffmpeg && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
 RUN npm ci --only=production
 
 COPY --from=development /vid-splitter/server/dist ./dist
