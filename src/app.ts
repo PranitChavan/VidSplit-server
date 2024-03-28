@@ -11,7 +11,7 @@ const app: Express = express();
 
 app.use(
   cors({
-    origin: '*',
+    origin: 'https://vidsplit.vercel.app/',
   })
 );
 
