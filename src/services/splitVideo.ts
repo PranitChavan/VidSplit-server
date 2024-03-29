@@ -10,7 +10,7 @@ const rootOutputDir = path.join(process.cwd(), 'outputs'); // root outputs folde
 export default async function splitVideo(videoParams: ISplitReqBody): Promise<string> {
   const { videoUrl, chunkDuration, sessionId } = videoParams;
 
-  logger.info('Split process started', { Information: `Split process started for id: ${sessionId}`, Timestamp: formatDate(new Date()) });
+  logger.info('Split process started', { Information: `Split process started for id: ${sessionId}` });
 
   return new Promise((resolve, reject) => {
     const outputDir = path.join(rootOutputDir, sessionId.toString());
@@ -23,11 +23,11 @@ export default async function splitVideo(videoParams: ISplitReqBody): Promise<st
       .outputOptions(['-map 0', '-f segment', `-segment_time ${chunkDuration}`, '-g 30', '-reset_timestamps 1'])
       .output(outputPath)
       .on('end', () => {
-        logger.info('Split process completed', { Information: `Split process completed for id: ${sessionId}`, Timestamp: formatDate(new Date()) });
+        logger.info('Split process completed', { Information: `Split process completed for id: ${sessionId}` });
         resolve('Done');
       })
       .on('error', (err) => {
-        logger.error('Split process error', { Information: `Split process failed for id: ${sessionId}: ${err}`, Timestamp: formatDate(new Date()) });
+        logger.info('Split process error', { Information: `Split process failed for id: ${sessionId}: ${err}` });
         reject(err);
       })
       .run();
