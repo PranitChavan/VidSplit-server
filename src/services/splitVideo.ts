@@ -26,8 +26,8 @@ export default async function splitVideo(videoParams: ISplitReqBody): Promise<st
         logger.info('Split process completed', { Information: `Split process completed for id: ${sessionId}` });
         resolve('Done');
       })
-      .on('error', (err) => {
-        logger.info('Split process error', { Information: `Split process failed for id: ${sessionId}: ${err}` });
+      .on('error', (err, stdout, stderr) => {
+        logger.info('Split process error', { Information: `Split process failed for id: ${sessionId}: ${err} ${stdout} ${stderr}` });
         reject(err);
       })
       .run();
