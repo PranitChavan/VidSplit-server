@@ -4,7 +4,7 @@ import splitVideo from '../services/splitVideo';
 import uploadChunksToStorage from '../services/uploadChunks';
 import deleteChunksFolder from '../utils/deleteChunksFolder';
 import { logger } from '../Logger/logger';
-import { formatDate } from '../utils/utils';
+import downloadVideoFromUrl from '../utils/downloadVideoFromUrl';
 
 export async function splitVideoMiddleWare(req: Request, _res: Response, next: NextFunction) {
   const requestBody = <ISplitReqBody>req.body;
@@ -12,7 +12,8 @@ export async function splitVideoMiddleWare(req: Request, _res: Response, next: N
   logger.info('Process init', { Information: `Process started for id: ${requestBody.sessionId}`, chunkDuration: requestBody.chunkDuration, url: requestBody.videoUrl });
 
   try {
-    await splitVideo(requestBody);
+    const videoFilePath = await downloadVideoFromUrl(requestBody.videoUrl, requestBody.sessionId);
+    await splitVideo(requestBody, videoFilePath);
     await uploadChunksToStorage(requestBody.sessionId);
     logger.info('Upload Process', { Information: `Upload process completed for id: ${requestBody.sessionId}` });
   } catch (error) {

@@ -5,10 +5,9 @@ import { StorageError } from '@supabase/storage-js';
 import deleteExistingChunks from './deleteChunks';
 import { SupabaseStorageExceptions } from '../Exceptions/SupabaseStorageExceptions';
 import { logger } from '../Logger/logger';
-import { formatDate } from '../utils/utils';
 
 export default async function uploadChunksToStorage(sessionId: string): Promise<StorageError | void> {
-  const chunksDir: string = path.join(process.cwd(), 'outputs', sessionId);
+  const chunksDir: string = path.join(process.cwd(), 'outputs', sessionId, 'Chunks');
 
   await deleteExistingChunks(sessionId);
 
