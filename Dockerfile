@@ -1,4 +1,4 @@
-FROM node:18 as development
+FROM node:18-slim as development
 
 WORKDIR /vid-splitter/server/
 
@@ -11,7 +11,7 @@ COPY . .
 
 RUN npm run build
 
-FROM node:18 as production
+FROM node:18-slim as production
 
 ENV NODE_ENV=production
 
