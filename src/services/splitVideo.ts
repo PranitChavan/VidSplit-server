@@ -3,6 +3,9 @@ import fs from 'fs';
 import { ISplitReqBody } from '../models/types';
 import FFmpeg from 'fluent-ffmpeg';
 import { logger } from '../Logger/logger';
+import pathToFfmpeg from 'ffmpeg-static';
+
+FFmpeg.setFfmpegPath(pathToFfmpeg);
 
 const rootOutputDir = path.join(process.cwd(), 'outputs'); // root outputs folder path
 
