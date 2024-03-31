@@ -14,7 +14,7 @@ export default async function uploadChunksToStorage(sessionId: string): Promise<
   //  Read the list of files in the directory
   const files: string[] = fs.readdirSync(chunksDir);
 
-  logger.info('Upload Process', { Information: `Upload process started for id: ${sessionId}` });
+  logger.info('Upload Process started', { Information: `Upload process started for id: ${sessionId}` });
 
   for (const fileName of files) {
     const filePath = path.join(chunksDir, fileName);
@@ -27,7 +27,7 @@ export default async function uploadChunksToStorage(sessionId: string): Promise<
     });
 
     if (error) {
-      logger.info('Upload Process', { Information: `Upload process failed for id: ${sessionId} : ${error.message}` });
+      logger.info('Upload Process failed', { Information: `Upload process failed for id: ${sessionId} : ${error.message}` });
       throw new SupabaseStorageExceptions(`FAILED TO UPLOAD VIDEO CHUNKS : ${error.message}`);
     }
   }

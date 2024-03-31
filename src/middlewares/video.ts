@@ -15,7 +15,7 @@ export async function splitVideoMiddleWare(req: Request, _res: Response, next: N
     const videoFilePath = await downloadVideoFromUrl(requestBody.videoUrl, requestBody.sessionId);
     await splitVideo(requestBody, videoFilePath);
     await uploadChunksToStorage(requestBody.sessionId);
-    logger.info('Upload Process', { Information: `Upload process completed for id: ${requestBody.sessionId}` });
+    logger.info('Upload Process completed!', { Information: `Upload process completed for id: ${requestBody.sessionId}` });
   } catch (error) {
     next(error);
   } finally {
