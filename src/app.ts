@@ -8,9 +8,11 @@ import { logger } from './Logger/logger';
 dotenv.config();
 const app: Express = express();
 
+const allowedOrigins: string[] = ['https://www.vidsplitter.online', 'https://vidsplit-dev.vercel.app/'];
+
 app.use(
   cors({
-    origin: '*',
+    origin: process.env.NODE_ENV ? allowedOrigins : '*',
   })
 );
 
