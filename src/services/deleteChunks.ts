@@ -1,7 +1,7 @@
 import supabase from '../supabase/supabase';
 import { SupabaseStorageExceptions } from '../Exceptions/SupabaseStorageExceptions';
 
-export default async function deleteExistingChunks(sessionId: string): Promise<void> {
+export default async function deleteExistingChunksFromStorage(sessionId: string): Promise<void> {
   let { data: fileList, error: fileListError } = await supabase.storage.from(process.env.STORAGE_BUCKET).list(`${sessionId}/Chunks`);
   if (fileListError) throw new SupabaseStorageExceptions(`FAILED TO FETCH EXISIING FILE LIST : ${fileListError.message}`);
 

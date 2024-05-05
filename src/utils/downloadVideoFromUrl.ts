@@ -5,6 +5,7 @@ import fs from 'fs';
 export default async function downloadVideoFromUrl(videoUrl: string, sessionId: string): Promise<string> {
   try {
     const response = await fetch(videoUrl);
+
     if (!response.ok) {
       logger.info('Unable to download video', { videoUrl: videoUrl });
       throw new Error('Unable to download video from provided url!');
