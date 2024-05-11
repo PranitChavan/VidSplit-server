@@ -40,20 +40,34 @@ export default async function uploadChunksToStorage(sessionId: string): Promise<
 
   logger.info('Upload Process started', { Information: `Upload process started for id: ${sessionId}` });
 
+  const uploadPromises = [];
+
   for (const fileName of files) {
     const filePath = path.join(chunksDir, fileName);
 
     const videoFile: Buffer = await readChunkFile(filePath, sessionId);
 
-    const { error } = await supabase.storage.from(process.env.STORAGE_BUCKET).upload(`${sessionId}/Chunks/${fileName}`, videoFile, {
+    const uploadPromise = supabase.storage.from(process.env.STORAGE_BUCKET).upload(`${sessionId}/Chunks/${fileName}`, videoFile, {
       cacheControl: '3600',
       upsert: true,
       contentType: 'video/mp4',
     });
 
-    if (error) {
-      logger.info('Upload Process failed', { Information: `Upload process failed for id: ${sessionId} : ${error.message}` });
-      throw new SupabaseStorageExceptions(`FAILED TO UPLOAD VIDEO CHUNKS : ${error.message}`);
-    }
+    uploadPromises.push(uploadPromise);
+  }
+
+  try {
+    const uploadResults = await Promise.all(uploadPromises);
+
+    uploadResults.forEach((result) => {
+      if (result.error) {
+        throw result.error;
+      }
+    });
+
+    logger.info('Upload Process completed successfully', { Information: `Upload process completed successfully for id: ${sessionId}` });
+  } catch (error) {
+    logger.info('Upload Process failed', { Information: `Upload process failed for id: ${sessionId} : ${error.message}` });
+    throw new SupabaseStorageExceptions(`FAILED TO UPLOAD VIDEO CHUNKS : ${error.message}`);
   }
 }
