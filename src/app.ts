@@ -12,7 +12,7 @@ const allowedOrigins: string[] = ['https://www.vidsplitter.online', 'https://vid
 
 app.use(
   cors({
-    origin: '*',
+    origin: process.env.NODE_ENV ? allowedOrigins : '*',
   })
 );
 
